@@ -30,7 +30,7 @@ public class ShootRayCast : MonoBehaviour
             Destroy(a, 1);
             Destroy(b, 1);
 
-            Enemy enemy = hit.transform.GetComponent<Enemy>();
+            DamageScript enemy = hit.transform.GetComponent<DamageScript>();
 
             if(enemy != null)
             {

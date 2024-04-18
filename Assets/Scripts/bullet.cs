@@ -14,7 +14,7 @@ public class bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Destroy(gameObject);
-        Enemy enemy = collision.transform.GetComponent<Enemy>();
+        DamageScript enemy = collision.transform.GetComponent<DamageScript>();
 
         if (enemy != null)
         {
