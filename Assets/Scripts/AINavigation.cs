@@ -15,8 +15,6 @@ public class AINavigation : MonoBehaviour
     public float viewAngle = 90;
     public LayerMask playerMask;
     public LayerMask obstacleMask;
-    public float meshResolution = 1f;
-    public int edgeIterations = 4;
     public float edgeDistance = 0.5f;
 
     public Transform[] waypoints;
@@ -148,10 +146,6 @@ public class AINavigation : MonoBehaviour
         m_CurrentWaypointIndex = (m_CurrentWaypointIndex+1) % waypoints.Length;
         navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
 
-    }
-    void CaughtPlayer()
-    {
-        m_CaughtPlayer = true;
     }
     void LookingPlayer(Vector3 player)
     {

@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 666164839060799245}
   - component: {fileID: 6269573688872996343}
   - component: {fileID: 1630342990111136513}
-  - component: {fileID: 2191670693691369815}
   m_Layer: 0
   m_Name: Eye
   m_TagString: Untagged
@@ -140,21 +139,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2191670693691369815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4411624834583234806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bfb1e33c8949f245a9b0e1d4532de0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 7968439011424107699}
-  fire: {fileID: 2674736598840582565, guid: 7b4e3e7cba89f044b93836f06dbdc069, type: 3}
-  hitPoint: {fileID: 2674736598840582565, guid: 7b4e3e7cba89f044b93836f06dbdc069, type: 3}
 --- !u!1 &8911094141154477186
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +152,7 @@ GameObject:
   - component: {fileID: 3154979921487754597}
   - component: {fileID: 1386350146021987847}
   - component: {fileID: 1746502334220425111}
+  - component: {fileID: 2193388297715090257}
   - component: {fileID: 7118431156080277081}
   m_Layer: 0
   m_Name: Player
@@ -220,7 +205,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 53b28638587dfdf43a86a329ce3d0805, type: 2}
+  - {fileID: 2100000, guid: 0373ea4c3c63e7645a461ad8cad9b8a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -278,6 +263,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+--- !u!114 &2193388297715090257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8911094141154477186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8972ad456db25164e8b66058ef78c450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 7968439011424107699}
+  bulletPreFab: {fileID: 5625881406977270316, guid: 7e57d52ae87263d4d860e7de6e9b928e, type: 3}
+  bulletSpeed: 10
 --- !u!143 &7118431156080277081
 CharacterController:
   m_ObjectHideFlags: 0
