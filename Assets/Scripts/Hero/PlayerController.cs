@@ -12,9 +12,9 @@ public class PlayerController : MonoBehaviour
     float currentVelocity;
 
     //variaves para atenção no inimigo
-    public float turnSpeed = 10;
-    public Transform enemy;
-    public float raioDeAtencao;
+    //public float turnSpeed = 10;
+    //public Transform enemy;
+    //public float raioDeAtencao;
 
 
     //variaveis de movimento
@@ -32,23 +32,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         CC = GetComponent<CharacterController>();
-        enemy = GameObject.FindWithTag("Enemy").transform;
     }
 
     void Update()
     {
+        Rotacionar();
         Movimentar();
 
-        float distanciaPlayerEnemy = Vector3.Distance(transform.position, enemy.position);
-        
-        if (distanciaPlayerEnemy <= raioDeAtencao)
-        {
-            OlharParaOInimigo();
-        }
-        else
-        {
-            Rotacionar();
-        }
+        //float distanciaPlayerEnemy = Vector3.Distance(transform.position, enemy.position);
        
         if(timer > frequenciaDeTiro && Input.GetKeyDown(KeyCode.Space))
         {
@@ -78,9 +69,9 @@ public class PlayerController : MonoBehaviour
     }
     void OlharParaOInimigo()
     {
-        Vector3 direction = (enemy.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, turnSpeed * Time.deltaTime);
+        //Vector3 direction = (enemy.position - transform.position).normalized;
+        //Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        //transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, turnSpeed * Time.deltaTime);
     }
     void Atirar()
     {

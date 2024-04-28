@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
 
-public class Follow : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public NavMeshAgent AI;
 
@@ -17,21 +17,28 @@ public class Follow : MonoBehaviour
     
     public float raioDeGuarda;
     public float distanciaDeAtaque;
-    public float turnSpeed = 5;
+    public float velocidadeDeGiro = 5;
 
     public float velocidadeAoAndar = 6;
     public float velocidadeAoCorrer = 9;
 
-    public Transform firePoint;
-    public GameObject bulletPreFab;
-    public float bulletSpeed = 10;
+    public Transform gatilho;
+    public GameObject ProjetilPreFab;
+    public float velocidadeDoProjetil = 10;
     public float frequenciaDoTiro;
     float timer = 0;
+
+    public int vidaMaxima = 50;
+    public int vidaAtual;
+    public BarraDeVida barraDeVida;
 
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
         AI = GetComponent<NavMeshAgent>();
+
+        vidaAtual = vidaMaxima;
+        barraDeVida.AlterarBarraDeVida(vidaAtual, vidaMaxima);
     }
 
     void Update()
@@ -88,8 +95,8 @@ public class Follow : MonoBehaviour
     {
         if (timer > frequenciaDoTiro)
         {
-            var bullet = Instantiate(bulletPreFab, firePoint.position, firePoint.rotation);
-            bullet.GetComponent<Rigidbody>().velocity = firePoint.forward * bulletSpeed;
+            var bullet = Instantiate(ProjetilPreFab, gatilho.position, gatilho.rotation);
+            bullet.GetComponent<Rigidbody>().velocity = gatilho.forward * velocidadeDoProjetil;
             timer = 0;
         }
         timer += Time.deltaTime;
@@ -98,6 +105,16 @@ public class Follow : MonoBehaviour
     {
         Vector3 direction = (player.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, turnSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, velocidadeDeGiro * Time.deltaTime);
+    }
+    public void ApplyDamege(int dano)
+    {
+        vidaAtual -= dano;
+        barraDeVida.AlterarBarraDeVida(vidaAtual, vidaMaxima);
+
+        if (vidaAtual <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
