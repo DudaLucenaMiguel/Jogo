@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class DamageScript : MonoBehaviour
 {
-    public int life = 10;
+    public int vidaMaxima = 50;
+    public int vidaAtual;
 
+    public BarraDeVida barraDeVida;
+
+    public void Start()
+    {
+        vidaAtual = vidaMaxima;
+        barraDeVida.AlterarBarraDeVida(vidaAtual, vidaMaxima);
+    }
     public void ApplyDamege(int demage)
     {
-        life -= demage;
+        vidaAtual -= demage;
+        barraDeVida.AlterarBarraDeVida(vidaAtual, vidaMaxima);
 
-        if(life<=0)
+        if (vidaAtual<=0)
         {
             Destroy(this.gameObject);
         }

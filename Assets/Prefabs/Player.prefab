@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7968439011424107699}
   m_Layer: 0
-  m_Name: firePoint
+  m_Name: gatilho
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3436203208327404847}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.50000006}
+  m_LocalPosition: {x: 0, y: 0, z: 0.709}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -152,7 +152,6 @@ GameObject:
   - component: {fileID: 3154979921487754597}
   - component: {fileID: 1386350146021987847}
   - component: {fileID: 1746502334220425111}
-  - component: {fileID: 2193388297715090257}
   - component: {fileID: 7118431156080277081}
   m_Layer: 0
   m_Name: Player
@@ -262,22 +261,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda612f58064086418d4c48c27b3ddb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
---- !u!114 &2193388297715090257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8911094141154477186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8972ad456db25164e8b66058ef78c450, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 7968439011424107699}
-  bulletPreFab: {fileID: 5625881406977270316, guid: 7e57d52ae87263d4d860e7de6e9b928e, type: 3}
-  bulletSpeed: 10
+  turnSpeed: 10
+  enemy: {fileID: 0}
+  raioDeAtencao: 10
+  velocidadeDoPlayer: 10
+  gatilho: {fileID: 7968439011424107699}
+  projetilPreFab: {fileID: 5625881406977270316, guid: 7e57d52ae87263d4d860e7de6e9b928e, type: 3}
+  velocidadeDoPorjetil: 10
+  frequenciaDeTiro: 1
 --- !u!143 &7118431156080277081
 CharacterController:
   m_ObjectHideFlags: 0

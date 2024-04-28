@@ -15,7 +15,6 @@ public class Follow : MonoBehaviour
     public Transform[] wayPoints;
     int index;
     
-
     public float raioDeGuarda;
     public float distanciaDeAtaque;
     public float turnSpeed = 5;
@@ -29,10 +28,9 @@ public class Follow : MonoBehaviour
     public float frequenciaDoTiro;
     float timer = 0;
 
-    
-
     void Start()
     {
+        player = GameObject.FindWithTag("Player").transform;
         AI = GetComponent<NavMeshAgent>();
     }
 
@@ -41,7 +39,7 @@ public class Follow : MonoBehaviour
         float distanciaPlayerBase = Vector3.Distance(eixo.position, player.position);
         float distanciaPlayerEnemy = Vector3.Distance(transform.position, player.position);
 
-        if (distanciaPlayerBase <= raioDeGuarda && distanciaPlayerEnemy> distanciaDeAtaque)
+        if (distanciaPlayerBase <= raioDeGuarda && distanciaPlayerEnemy > distanciaDeAtaque)
         {
             Perseguir();
         }

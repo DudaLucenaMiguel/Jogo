@@ -5,49 +5,87 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
+    CharacterController CC;
 
     //variaveis de rotação;
-    private float smoothTime = 0.05f;
-    private float currentVelocity;
+    float smoothTime = 0.05f;
+    float currentVelocity;
 
-    
+    //variaves para atenção no inimigo
+    public float turnSpeed = 10;
+    public Transform enemy;
+    public float raioDeAtencao;
+
+
     //variaveis de movimento
-    CharacterController Control;
-    Vector3 move;
-    public float speed = 10;
-    private float horizontal;
-    private float vertical;
+    public float velocidadeDoPlayer = 10;
+    Vector3 direcao;
+    float horizontal;
+    float vertical;
+
+    //variaveis de tiro
+    public Transform gatilho;
+    public GameObject projetilPreFab;
+    public float velocidadeDoPorjetil = 10;
+    public float frequenciaDeTiro = 1;
+    float timer;
     void Start()
     {
-        Control = GetComponent<CharacterController>();
+        CC = GetComponent<CharacterController>();
+        enemy = GameObject.FindWithTag("Enemy").transform;
     }
 
-    
     void Update()
     {
-        ApplyMovement();
-        ApplyRotation();
+        Movimentar();
+
+        float distanciaPlayerEnemy = Vector3.Distance(transform.position, enemy.position);
+        
+        if (distanciaPlayerEnemy <= raioDeAtencao)
+        {
+            OlharParaOInimigo();
+        }
+        else
+        {
+            Rotacionar();
+        }
+       
+        if(timer > frequenciaDeTiro && Input.GetKeyDown(KeyCode.Space))
+        {
+            Atirar();
+            timer = 0;
+        }
+        timer += Time.deltaTime;
+        
     }
-    public void ApplyMovement()
+    public void Movimentar()
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
-        move = new Vector3(horizontal * speed * Time.deltaTime, 0, vertical * speed * Time.deltaTime);
+        direcao = new Vector3(horizontal * velocidadeDoPlayer * Time.deltaTime, 0, vertical * velocidadeDoPlayer * Time.deltaTime);
 
-        Control.Move(move);
+        CC.Move(direcao);
     }
-    public void ApplyRotation()
+    public void Rotacionar()
     {
-        if (move.magnitude >= smoothTime)
+        if (direcao.magnitude >= smoothTime)
         {
-            var targetAngle = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
-            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref currentVelocity, smoothTime);
+            var targetAngle = Mathf.Atan2(direcao.x, direcao.z) * Mathf.Rad2Deg;
+            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref currentVelocity, smoothTime*Time.deltaTime);
             transform.rotation = Quaternion.Euler(0, angle, 0);
         }
-        
-
+    }
+    void OlharParaOInimigo()
+    {
+        Vector3 direction = (enemy.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, turnSpeed * Time.deltaTime);
+    }
+    void Atirar()
+    {
+            var bullet = Instantiate(projetilPreFab, gatilho.position, gatilho.rotation);
+            bullet.GetComponent<Rigidbody>().velocity = gatilho.forward * velocidadeDoPorjetil;
     }
 }
 
