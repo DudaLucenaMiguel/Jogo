@@ -58,7 +58,6 @@ public class Enemy : MonoBehaviour
         {
            Patrulhar();
         }
-        
     }
     void Patrulhar()
     {
