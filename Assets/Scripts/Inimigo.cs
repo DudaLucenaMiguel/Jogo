@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
 
-public class Enemy : MonoBehaviour
+public class InimigoScript : MonoBehaviour
 {
-    public NavMeshAgent AI;
+    NavMeshAgent AI;
 
     public Transform player;
     public Transform eixo;
@@ -25,17 +25,24 @@ public class Enemy : MonoBehaviour
     public Transform gatilho;
     public GameObject ProjetilPreFab;
     public float velocidadeDoProjetil = 10;
+    public int danoCausado;
     public float frequenciaDoTiro;
-    float timer = 0;
+    [System.NonSerialized] public float timer = 0;
 
     public int vidaMaxima = 50;
     public int vidaAtual;
     public BarraDeVida barraDeVida;
+    //[System.NonSerialized] 
+    public int danoSofrido;
+    PlayerScript playerScript;
+    
 
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
         AI = GetComponent<NavMeshAgent>();
+
+        playerScript = GameObject.Find("Player").GetComponent<PlayerScript>();
 
         vidaAtual = vidaMaxima;
         barraDeVida.AlterarBarraDeVida(vidaAtual, vidaMaxima);
@@ -43,6 +50,8 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        playerScript.danoSofrido = danoCausado;
+
         float distanciaPlayerBase = Vector3.Distance(eixo.position, player.position);
         float distanciaPlayerEnemy = Vector3.Distance(transform.position, player.position);
 
@@ -108,6 +117,7 @@ public class Enemy : MonoBehaviour
     }
     public void ApplyDamege(int dano)
     {
+        dano = danoSofrido;
         vidaAtual -= dano;
         barraDeVida.AlterarBarraDeVida(vidaAtual, vidaMaxima);
 

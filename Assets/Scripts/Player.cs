@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerScript : MonoBehaviour
 {
     CharacterController CC;
 
@@ -14,23 +15,42 @@ public class PlayerController : MonoBehaviour
     float smoothTime = 0.05f;
     float currentVelocity;
 
-    public float sensitivity = 100;
-
     //variaveis de tiro
     public Transform gatilho;
     public GameObject projetilPreFab;
     public float velocidadeDoPorjetil = 20;
+    public int danoCausado;
     public float frequenciaDeTiro = 0;
-    float timer;
-
+    [System.NonSerialized]  public float timer;
     
+    //variaveis de vida
+    public int vidaMaxima = 100;
+    public int vidaAtual;
+    public BarraDeVida barraDeVida;
+    [System.NonSerialized] public int danoSofrido;
+    public InimigoScript[] Inimigos;
+
     void Start()
     {
         CC = GetComponent<CharacterController>();
+
+        Inimigos = new InimigoScript [4];
+        for(int i = 0; i<Inimigos.Length; i++)
+        {
+            Inimigos[i] = GameObject.Find("Inimigo"+i).GetComponent<InimigoScript>();
+        }
+           
+        vidaAtual = vidaMaxima;
+        barraDeVida.AlterarBarraDeVida(vidaAtual, vidaMaxima);
     }
 
     void Update()
     {
+        for (int i = 0; i < Inimigos.Length; i++)
+        {
+            Inimigos[i].danoSofrido = danoCausado;
+        }
+
         if (Input.GetKey(KeyCode.Mouse1))
         {
            Mirar();
@@ -40,11 +60,13 @@ public class PlayerController : MonoBehaviour
             Rotacionar();
             Movimentar();
         }
-
-        if (timer > frequenciaDeTiro && Input.GetKeyDown(KeyCode.Mouse0))
+        if(timer > frequenciaDeTiro)
         {
-            Atirar();
-            timer = 0;
+            if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyUp(KeyCode.Mouse1))
+            {
+                Atirar();
+                timer = 0;
+            }
         }
         timer += Time.deltaTime;
     }
@@ -77,7 +99,17 @@ public class PlayerController : MonoBehaviour
         var bullet = Instantiate(projetilPreFab, gatilho.position, gatilho.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * velocidadeDoPorjetil, ForceMode.Impulse);
-        
+    }
+    public void ApplyDamege(int dano)
+    {
+        dano = danoSofrido;
+        vidaAtual -= dano;
+        barraDeVida.AlterarBarraDeVida(vidaAtual, vidaMaxima);
+
+        if (vidaAtual <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
 

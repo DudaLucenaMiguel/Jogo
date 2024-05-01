@@ -5,20 +5,19 @@ using UnityEngine.UI;
 
 public class BarraDeVida : MonoBehaviour
 {
-    public Image barraDeVidaImage;
+    public Image vidaRestante;
     public Transform camera;
 
     private void Awake()
     {
         camera = Camera.main.transform;
     }
-    
     void Update()
     {
         transform.LookAt(transform.position + camera.forward);
     }
     public void AlterarBarraDeVida(int vidaAtual, int vidaMaxima)
     {
-        barraDeVidaImage.fillAmount = (float) vidaAtual / vidaMaxima;
+        vidaRestante.fillAmount = (float) vidaAtual / vidaMaxima;
     }
 }
