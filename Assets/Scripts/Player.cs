@@ -27,28 +27,32 @@ public class PlayerScript : MonoBehaviour
     public int vidaMaxima = 100;
     public int vidaAtual;
     public BarraDeVida barraDeVida;
-    [System.NonSerialized] public int danoSofrido;
-    public InimigoScript[] Inimigos;
+    public int danoSofrido;
+    public GameObject[] inimigos;
+    public InimigoScript[] inimigosScript;
 
+    private void Awake()
+    {
+        inimigos = GameObject.FindGameObjectsWithTag("Enemy");
+        inimigosScript = new InimigoScript[inimigos.Length];
+        for(int i = 0; i<inimigosScript.Length; i++)
+        {
+            inimigosScript[i] = inimigos[i].GetComponent<InimigoScript>();
+        }
+    }
     void Start()
     {
         CC = GetComponent<CharacterController>();
 
-        Inimigos = new InimigoScript [4];
-        for(int i = 0; i<Inimigos.Length; i++)
-        {
-            Inimigos[i] = GameObject.Find("Inimigo"+i).GetComponent<InimigoScript>();
-        }
-           
         vidaAtual = vidaMaxima;
         barraDeVida.AlterarBarraDeVida(vidaAtual, vidaMaxima);
     }
 
     void Update()
     {
-        for (int i = 0; i < Inimigos.Length; i++)
+        for (int i = 0; i < inimigosScript.Length; i++)
         {
-            Inimigos[i].danoSofrido = danoCausado;
+            inimigosScript[i].danoSofrido = danoCausado;
         }
 
         if (Input.GetKey(KeyCode.Mouse1))
@@ -60,15 +64,10 @@ public class PlayerScript : MonoBehaviour
             Rotacionar();
             Movimentar();
         }
-        if(timer > frequenciaDeTiro)
-        {
-            if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyUp(KeyCode.Mouse1))
-            {
-                Atirar();
-                timer = 0;
-            }
-        }
-        timer += Time.deltaTime;
+
+        Atirar();
+
+        GerenciarInimigos();
     }
     public void Movimentar()
     {
@@ -96,9 +95,19 @@ public class PlayerScript : MonoBehaviour
     }
     void Atirar()
     {
-        var bullet = Instantiate(projetilPreFab, gatilho.position, gatilho.rotation);
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * velocidadeDoPorjetil, ForceMode.Impulse);
+        if (timer > frequenciaDeTiro)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyUp(KeyCode.Mouse1))
+            {
+                var bullet = Instantiate(projetilPreFab, gatilho.position, gatilho.rotation);
+                Rigidbody rb = bullet.GetComponent<Rigidbody>();
+                rb.AddForce(transform.forward * velocidadeDoPorjetil, ForceMode.Impulse);
+
+                timer = 0;
+            }
+        }
+        timer += Time.deltaTime;
+        
     }
     public void ApplyDamege(int dano)
     {
@@ -108,8 +117,22 @@ public class PlayerScript : MonoBehaviour
 
         if (vidaAtual <= 0)
         {
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
+    }
+    void GerenciarInimigos()
+    {
+        bool todosVivos = false;
+        foreach(GameObject obj in inimigos)
+        {
+            if(obj.activeSelf)
+            {
+                todosVivos = true;
+                break;
+            }
+
+            Debug.Log("todos os inimigos estão mortos");
+        }    
     }
 }
 

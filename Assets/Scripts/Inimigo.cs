@@ -25,14 +25,13 @@ public class InimigoScript : MonoBehaviour
     public Transform gatilho;
     public GameObject ProjetilPreFab;
     public float velocidadeDoProjetil = 10;
-    public int danoCausado;
+    public int danoCausado = 5;
     public float frequenciaDoTiro;
     [System.NonSerialized] public float timer = 0;
 
     public int vidaMaxima = 50;
     public int vidaAtual;
-    public BarraDeVida barraDeVida;
-    //[System.NonSerialized] 
+    public BarraDeVida barraDeVida; 
     public int danoSofrido;
     PlayerScript playerScript;
     
@@ -123,7 +122,7 @@ public class InimigoScript : MonoBehaviour
 
         if (vidaAtual <= 0)
         {
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

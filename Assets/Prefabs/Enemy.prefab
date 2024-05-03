@@ -222,11 +222,12 @@ MonoBehaviour:
   gatilho: {fileID: 7784740092050330427}
   ProjetilPreFab: {fileID: 5625881406977270316, guid: 7e57d52ae87263d4d860e7de6e9b928e, type: 3}
   velocidadeDoProjetil: 10
-  danoCausado: 0
+  danoCausado: 10
   frequenciaDoTiro: 1
   vidaMaxima: 50
   vidaAtual: 0
   barraDeVida: {fileID: 7569526466773268842}
+  danoSofrido: 0
 --- !u!1 &5245743945311938899
 GameObject:
   m_ObjectHideFlags: 0

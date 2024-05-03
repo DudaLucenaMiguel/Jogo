@@ -185,11 +185,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5033134613704934234, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
-      value: Inimigo2
+      value: Inimigo
       objectReference: {fileID: 0}
     - target: {fileID: 5245743945311938899, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
-      value: InimigoObject 2
+      value: InimigoPreFab
       objectReference: {fileID: 0}
     - target: {fileID: 5349614556110381858, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
@@ -697,11 +697,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5033134613704934234, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
-      value: Inimigo1
+      value: Inimigo
       objectReference: {fileID: 0}
     - target: {fileID: 5245743945311938899, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
-      value: InimigoObject 1
+      value: InimigoPreFab
       objectReference: {fileID: 0}
     - target: {fileID: 5349614556110381858, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
@@ -813,11 +813,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5033134613704934234, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
-      value: Inimigo0
+      value: Inimigo
       objectReference: {fileID: 0}
     - target: {fileID: 5245743945311938899, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
-      value: InimigoObject 0
+      value: InimigoPreFab
       objectReference: {fileID: 0}
     - target: {fileID: 5349614556110381858, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
@@ -851,6 +851,10 @@ PrefabInstance:
       propertyPath: vidaRestante
       value: 
       objectReference: {fileID: 556558216}
+    - target: {fileID: 7766378921355739947, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -918,11 +922,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5033134613704934234, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
-      value: Inimigo3
+      value: Inimigo
       objectReference: {fileID: 0}
     - target: {fileID: 5245743945311938899, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
-      value: InimigoObject 3
+      value: InimigoPreFab
       objectReference: {fileID: 0}
     - target: {fileID: 5349614556110381858, guid: 08c93c2f089760c41b7564d810e057d0, type: 3}
       propertyPath: m_Name
