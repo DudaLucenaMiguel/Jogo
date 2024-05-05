@@ -7,6 +7,7 @@ public class Projetil : MonoBehaviour
     InimigoScript inimigo;
     PlayerScript player;
     int dano;
+    public float distanciaMaxima = 3;
 
     private void OnCollisionEnter(Collision collision)
     {

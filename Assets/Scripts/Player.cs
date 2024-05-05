@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -18,27 +19,31 @@ public class PlayerScript : MonoBehaviour
     //variaveis de tiro
     public Transform gatilho;
     public GameObject projetilPreFab;
-    public float velocidadeDoPorjetil = 20;
+    public float velocidadeDoProjetil = 20;
+    public float distanciaMaximaDoProjetil = 10;
+    float tempoDeVidaDoProjetil;
     public int danoCausado;
     public float frequenciaDeTiro = 0;
     [System.NonSerialized]  public float timer;
+    public BarraDoProximoDano barraDeDano;
     
+
+
     //variaveis de vida
     public int vidaMaxima = 100;
     public int vidaAtual;
     public BarraDeVida barraDeVida;
     public int danoSofrido;
+
+    //variaveis de gerenciamento dos inimigos
     public GameObject[] inimigos;
     public InimigoScript[] inimigosScript;
+    public int[] condicaoDoInimigo;
+    int somaDeInimigosConvertidos;
 
     private void Awake()
     {
-        inimigos = GameObject.FindGameObjectsWithTag("Enemy");
-        inimigosScript = new InimigoScript[inimigos.Length];
-        for(int i = 0; i<inimigosScript.Length; i++)
-        {
-            inimigosScript[i] = inimigos[i].GetComponent<InimigoScript>();
-        }
+        GerenciarInimigos();
     }
     void Start()
     {
@@ -55,7 +60,7 @@ public class PlayerScript : MonoBehaviour
             inimigosScript[i].danoSofrido = danoCausado;
         }
 
-        if (Input.GetKey(KeyCode.Mouse1))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
            Mirar();
         }
@@ -67,7 +72,7 @@ public class PlayerScript : MonoBehaviour
 
         Atirar();
 
-        GerenciarInimigos();
+        GerenciarVitoria();
     }
     public void Movimentar()
     {
@@ -97,16 +102,22 @@ public class PlayerScript : MonoBehaviour
     {
         if (timer > frequenciaDeTiro)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyUp(KeyCode.Mouse1))
+            if (Input.GetKeyUp(KeyCode.Mouse0))
             {
-                var bullet = Instantiate(projetilPreFab, gatilho.position, gatilho.rotation);
-                Rigidbody rb = bullet.GetComponent<Rigidbody>();
-                rb.AddForce(transform.forward * velocidadeDoPorjetil, ForceMode.Impulse);
+                GameObject ataque = Instantiate(projetilPreFab, gatilho.position, gatilho.rotation);
+                Rigidbody rb = ataque.GetComponent<Rigidbody>();
+                rb.AddForce(transform.forward * velocidadeDoProjetil, ForceMode.Impulse);
+
+                tempoDeVidaDoProjetil = distanciaMaximaDoProjetil / velocidadeDoProjetil;
+                Destroy(ataque, tempoDeVidaDoProjetil);
 
                 timer = 0;
+                barraDeDano.AlterarBarraDeProximoDano(timer, frequenciaDeTiro);
             }
         }
         timer += Time.deltaTime;
+        barraDeDano.AlterarBarraDeProximoDano(timer, frequenciaDeTiro);
+        
         
     }
     public void ApplyDamege(int dano)
@@ -120,19 +131,51 @@ public class PlayerScript : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    void GerenciarInimigos()
+    void GerenciarVitoria()
     {
-        bool todosVivos = false;
-        foreach(GameObject obj in inimigos)
+        bool todosOsInimigosEstaoMortos = false;
+        
+        while(!todosOsInimigosEstaoMortos)
         {
-            if(obj.activeSelf)
+            for (int i = 0; i<inimigos.Length; i++)
             {
-                todosVivos = true;
-                break;
+                if (inimigos[i].activeSelf)
+                {
+                    condicaoDoInimigo[i] = 0;
+                }
+                else
+                {
+                    condicaoDoInimigo[i] = 1;
+                }
+                
+                for(int j = 0; j<condicaoDoInimigo.Length; j++)
+                {
+                    somaDeInimigosConvertidos += condicaoDoInimigo[j];
+                }
             }
 
-            Debug.Log("todos os inimigos estão mortos");
-        }    
+            if (somaDeInimigosConvertidos == inimigos.Length)
+            {
+                todosOsInimigosEstaoMortos = true;
+            }
+            else
+            {
+                todosOsInimigosEstaoMortos = false;
+
+                somaDeInimigosConvertidos = 0;
+            }
+        }
+        Debug.Log("todos os inimigos foram convertidos");
+    }
+    void GerenciarInimigos()
+    {
+        inimigos = GameObject.FindGameObjectsWithTag("Enemy");
+        inimigosScript = new InimigoScript[inimigos.Length];
+        for (int i = 0; i < inimigosScript.Length; i++)
+        {
+            inimigosScript[i] = inimigos[i].GetComponent<InimigoScript>();
+        }
+        condicaoDoInimigo = new int[inimigos.Length];
     }
 }
 

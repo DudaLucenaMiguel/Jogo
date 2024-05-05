@@ -25,6 +25,8 @@ public class InimigoScript : MonoBehaviour
     public Transform gatilho;
     public GameObject ProjetilPreFab;
     public float velocidadeDoProjetil = 10;
+    public float distanciaMaximaDoProjetil = 10;
+    float tempoDeVidaDoProjetil;
     public int danoCausado = 5;
     public float frequenciaDoTiro;
     [System.NonSerialized] public float timer = 0;
@@ -96,15 +98,19 @@ public class InimigoScript : MonoBehaviour
     {
         AI.isStopped = true;
         Rotacionar();
-        Tiro();
+        Atirar();
     }
-    void Tiro()
+    void Atirar()
     {
         if (timer > frequenciaDoTiro)
         {
-            var bullet = Instantiate(ProjetilPreFab, gatilho.position, gatilho.rotation);
-            bullet.GetComponent<Rigidbody>().velocity = gatilho.forward * velocidadeDoProjetil;
+            GameObject bala = Instantiate(ProjetilPreFab, gatilho.position, gatilho.rotation);
+            bala.GetComponent<Rigidbody>().velocity = gatilho.forward * velocidadeDoProjetil;
+
             timer = 0;
+
+            tempoDeVidaDoProjetil = distanciaMaximaDoProjetil / velocidadeDoProjetil;
+            Destroy(bala, tempoDeVidaDoProjetil);
         }
         timer += Time.deltaTime;
     }
