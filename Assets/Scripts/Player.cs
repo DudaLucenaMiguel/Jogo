@@ -25,7 +25,6 @@ public class PlayerScript : MonoBehaviour
     public int danoCausado;
     public float frequenciaDeTiro = 0;
     [System.NonSerialized]  public float timer;
-    public BarraDoProximoDano barraDeDano;
     
 
 
@@ -38,7 +37,6 @@ public class PlayerScript : MonoBehaviour
     //variaveis de gerenciamento dos inimigos
     public GameObject[] inimigos;
     public InimigoScript[] inimigosScript;
-    public int[] condicaoDoInimigo;
     int somaDeInimigosConvertidos;
 
     private void Awake()
@@ -72,7 +70,7 @@ public class PlayerScript : MonoBehaviour
 
         Atirar();
 
-        GerenciarVitoria();
+        //GerenciarVitoria();
     }
     public void Movimentar()
     {
@@ -112,15 +110,11 @@ public class PlayerScript : MonoBehaviour
                 Destroy(ataque, tempoDeVidaDoProjetil);
 
                 timer = 0;
-                barraDeDano.AlterarBarraDeProximoDano(timer, frequenciaDeTiro);
             }
         }
         timer += Time.deltaTime;
-        barraDeDano.AlterarBarraDeProximoDano(timer, frequenciaDeTiro);
-        
-        
     }
-    public void ApplyDamege(int dano)
+    public void AplicarDanoNoPlayer(int dano)
     {
         dano = danoSofrido;
         vidaAtual -= dano;
@@ -131,42 +125,6 @@ public class PlayerScript : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    void GerenciarVitoria()
-    {
-        bool todosOsInimigosEstaoMortos = false;
-        
-        while(!todosOsInimigosEstaoMortos)
-        {
-            for (int i = 0; i<inimigos.Length; i++)
-            {
-                if (inimigos[i].activeSelf)
-                {
-                    condicaoDoInimigo[i] = 0;
-                }
-                else
-                {
-                    condicaoDoInimigo[i] = 1;
-                }
-                
-                for(int j = 0; j<condicaoDoInimigo.Length; j++)
-                {
-                    somaDeInimigosConvertidos += condicaoDoInimigo[j];
-                }
-            }
-
-            if (somaDeInimigosConvertidos == inimigos.Length)
-            {
-                todosOsInimigosEstaoMortos = true;
-            }
-            else
-            {
-                todosOsInimigosEstaoMortos = false;
-
-                somaDeInimigosConvertidos = 0;
-            }
-        }
-        Debug.Log("todos os inimigos foram convertidos");
-    }
     void GerenciarInimigos()
     {
         inimigos = GameObject.FindGameObjectsWithTag("Enemy");
@@ -175,7 +133,34 @@ public class PlayerScript : MonoBehaviour
         {
             inimigosScript[i] = inimigos[i].GetComponent<InimigoScript>();
         }
-        condicaoDoInimigo = new int[inimigos.Length];
     }
+    void GerenciarVitoria()
+    {
+        bool todosOsInimigosForamLiquidados = false;
+        
+        while(!todosOsInimigosForamLiquidados)
+        {
+            for (int i = 0; i<inimigos.Length; i++)
+            {
+                if (!inimigos[i].activeSelf)
+                {
+                    somaDeInimigosConvertidos++;
+                }
+            }
+
+            if (somaDeInimigosConvertidos == inimigos.Length)
+            {
+                todosOsInimigosForamLiquidados = true;
+            }
+            else
+            {
+                todosOsInimigosForamLiquidados = false;
+                somaDeInimigosConvertidos = 0;
+                Debug.Log("todos os inimigos foram convertidos");
+            }
+        }
+        
+    }
+    
 }
 

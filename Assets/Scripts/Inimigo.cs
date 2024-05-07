@@ -120,7 +120,7 @@ public class InimigoScript : MonoBehaviour
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, velocidadeDeGiro * Time.deltaTime);
     }
-    public void ApplyDamege(int dano)
+    public void AplicarDanoNoInimigo(int dano)
     {
         dano = danoSofrido;
         vidaAtual -= dano;

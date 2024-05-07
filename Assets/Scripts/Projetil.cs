@@ -7,7 +7,6 @@ public class Projetil : MonoBehaviour
     InimigoScript inimigo;
     PlayerScript player;
     int dano;
-    public float distanciaMaxima = 3;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -20,11 +19,11 @@ public class Projetil : MonoBehaviour
     {
         if (inimigo != null)
         {
-            inimigo.ApplyDamege(dano);
+            inimigo.AplicarDanoNoInimigo(dano);
         }
         if (player != null)
         {
-            player.ApplyDamege(dano);
+            player.AplicarDanoNoPlayer(dano);
         }
 
     }

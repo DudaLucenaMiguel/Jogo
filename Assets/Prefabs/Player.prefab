@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 171, y: -41}
+  m_AnchoredPosition: {x: 170, y: -30}
   m_SizeDelta: {x: 300, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7035480555643930425
@@ -66,10 +66,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: dd60d7f772a1c024fb33b6c81cf99863, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -377,7 +377,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 171, y: -41}
+  m_AnchoredPosition: {x: 170, y: -30}
   m_SizeDelta: {x: 300, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4088139101112747390
@@ -427,7 +427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7968439011424107699}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gatilho
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 666164839060799245}
   - component: {fileID: 6269573688872996343}
   - component: {fileID: 1630342990111136513}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Olho
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -571,7 +571,7 @@ GameObject:
   - component: {fileID: 3154979921487754597}
   - component: {fileID: 1386350146021987847}
   - component: {fileID: 7118431156080277081}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -589,7 +589,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3608775491501693403}
   - {fileID: 955297167798289817}
@@ -612,14 +612,18 @@ MonoBehaviour:
   velocidadeDeGiro: 200
   gatilho: {fileID: 7968439011424107699}
   projetilPreFab: {fileID: 5625881406977270316, guid: 7e57d52ae87263d4d860e7de6e9b928e, type: 3}
-  velocidadeDoPorjetil: 10
+  velocidadeDoProjetil: 20
+  distanciaMaximaDoProjetil: 10
   danoCausado: 10
   frequenciaDeTiro: 0
+  barraDeDano: {fileID: 0}
   vidaMaxima: 100
   vidaAtual: 0
   barraDeVida: {fileID: 5350153100092360157}
+  danoSofrido: 0
   inimigos: []
   inimigosScript: []
+  condicaoDoInimigo: 
 --- !u!33 &651305469212333224
 MeshFilter:
   m_ObjectHideFlags: 0
